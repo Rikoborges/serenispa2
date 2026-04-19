@@ -24,7 +24,13 @@ connectDB();
 
 // Middlewares de Sécurité
 app.use(helmet()); 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://serenispa2.vercel.app', // trocar pela URL real do Vercel após o deploy
+  ],
+  credentials: true,
+}));
 app.use(express.json());
 
 // Configuration Swagger 

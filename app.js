@@ -2,7 +2,9 @@
    SereniSpa — app.js (Version Optimisée RNCP)
    ============================================ */
 
-const API_URL = 'http://localhost:3000/api'; // Mudar para URL da Vercel/Render no deploy
+const API_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000/api'
+  : 'https://serenispa2.onrender.com/api'; // trocar pela URL real do Render após o deploy
 
 // --- AUXILIARES ---
 const getToken = () => localStorage.getItem('token');
