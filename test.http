@@ -1,0 +1,48 @@
+### Criar uma Nova Massagem (POST)
+POST http://localhost:3000/api/massages
+Content-Type: application/json
+
+{
+    "nom": "Massagem Relaxante SereniSpa",
+    "duree": 60,
+    "prix": 85,
+    "description": "Uma massagem profunda com óleos essenciais para total relaxamento.",
+    "image": "relax.webp"
+}
+
+### Listar todas as Massagens (GET)
+GET http://localhost:3000/api/massages
+
+### Inscrição de um novo Cliente (Signup)
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+    "nom": "Jean Dupont",
+    "email": "jean.dupont@email.com",
+    "password": "MaPasswordSecurisee123",
+    "telephone": "0601020304"
+}
+
+// teste roquete //
+### 1. CONNEXION (Pour récupérer le Token)
+# @name login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "jean.dupont@email.com",
+    "password": "MaPasswordSecurisee123"
+}
+
+#### COPIEZ LE TOKEN REÇU DANS LA RÉPONSE CI-DESSUS ####
+
+### 2. TESTER LA RÉSERVATION (Route Protégée)
+POST http://localhost:3000/api/reservations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRlMTZhNmIyZWU1ODk5ODhmOTIyZjAiLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNzc2MTY3NDMxLCJleHAiOjE3NzY3NzIyMzF9.tOy0t1i7cJT4fZOzzoCT5i13xqwqyM2z63N7umsLVTU.eyJ1c2VySWQiOiI2OWRlMTZhNmIyZWU1ODk5ODhmOTIyZjAiLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNzc2MTY3MTM3LCJleHAiOjE3NzY3NzE5Mzd9.T2VnDIPG-42e5MuiRlzDhYknIs4COQQSqvHgOCHH5d8
+
+{
+    "massageId": "ID_DU_MASSAGE_DEPUIS_ATLAS",
+    "date": "2026-05-20T14:30:00Z"
+}

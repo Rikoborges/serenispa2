@@ -1,0 +1,30 @@
+const Massage = require('../models/massage');
+
+class MassageService {
+    // Listagem com Paginação e Filtros (Pág. 175-177)
+    async getAllMassages(queryParams) {
+        // Pegamos a página da URL ou padrão 1. Limite padrão 6.
+        const page = parseInt(queryParams.page) || 1;
+        const limit = parseInt(queryParams.limit) || 6;
+        const skip = (page - 1) * limit;
+
+        // Filtro opcional: ex: ?prix_max=70 (Pág. 175)
+        let query = {};
+        if (queryParams.prix_max) {
+            query.prix = { $lte: queryParams.prix_max };
+        }
+
+        return await Massage.find(query)
+            .skip(skip)   // Pula os itens das páginas anteriores
+            .limit(limit) // Limite por página
+            .select('nom prix image description') // Projeção (Pág. 177)
+            .sort('prix'); // Ordenar por preço
+    }
+
+    async create(data) {
+        const massage = new Massage(data);
+        return await massage.save();
+    }
+}
+
+module.exports = new MassageService();

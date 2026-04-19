@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SereniSpa — Spa éthique et éco-responsable. Réservez vos massages bien-être en ligne.">
+  <meta name="theme-color" content="#1a1f1a">
+  <title>SereniSpa — Spa Éthique &amp; Éco-responsable</title>
+
+  <!-- Favicon SVG inline (0 requête HTTP) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Preload critique -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500&display=swap">
+</head>
+<body id="top">
+
+  <!-- ========== BANNIÈRE COOKIES RGPD ========== -->
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Consentement cookies" hidden>
+    <p>Ce site utilise des cookies essentiels pour le fonctionnement. Aucune donnée n'est partagée à des tiers.</p>
+    <div class="cookie-actions">
+      <button id="cookie-accept" class="btn btn--sm">Accepter</button>
+      <button id="cookie-decline" class="btn btn--sm btn--outline">Refuser</button>
+    </div>
+  </div>
+
+  <!-- ========== SKIP LINK A11Y ========== -->
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="#top" class="header__logo" aria-label="SereniSpa — Retour à l'accueil">
+        <span class="logo-icon" aria-hidden="true">🌿</span>
+        <span class="logo-text">SereniSpa</span>
+      </a>
+
+      <nav class="nav" role="navigation" aria-label="Navigation principale">
+        <!-- Burger -->
+        <button class="burger" id="burger-btn" aria-expanded="false" aria-controls="nav-menu" aria-label="Ouvrir le menu">
+          <span class="burger__line" aria-hidden="true"></span>
+          <span class="burger__line" aria-hidden="true"></span>
+          <span class="burger__line" aria-hidden="true"></span>
+        </button>
+
+        <ul class="nav__list" id="nav-menu" role="list">
+          <li><a href="#massages" class="nav__link">Massages</a></li>
+          <li><a href="#produits" class="nav__link">Produits</a></li>
+          <li><a href="#equipe" class="nav__link">Équipe</a></li>
+          <li><a href="#avis" class="nav__link">Avis</a></li>
+          <li><a href="#contact" class="nav__link">Contact</a></li>
+          <li id="nav-auth">
+            <a href="#connexion" class="nav__link nav__link--cta" id="nav-login-btn">Connexion</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main id="main-content">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <p class="hero__eyebrow">Spa éthique &amp; éco-responsable</p>
+        <h1 id="hero-title" class="hero__title">
+          Votre bien-être,<br>
+          <span class="hero__accent">notre engagement</span>
+        </h1>
+        <p class="hero__desc">
+          Des soins authentiques dans un espace pensé pour vous et pour la planète.
+          Chaque massage est un geste de soin — pour votre corps et pour l'environnement.
+        </p>
+        <div class="hero__actions">
+          <a href="#massages" class="btn">Découvrir nos soins</a>
+          <a href="#reservation" class="btn btn--outline">Réserver</a>
+        </div>
+        <div class="hero__eco" aria-label="Indicateurs éco-responsables">
+          <span class="eco-badge" aria-label="Moins de 0.25 grammes de CO2 par page">🌱 &lt;0.25g CO₂/page</span>
+          <span class="eco-badge" aria-label="EcoIndex classe A">⚡ EcoIndex A</span>
+          <span class="eco-badge" aria-label="Hébergement 100% renouvelable">♻️ 100% renouvelable</span>
+        </div>
+      </div>
+      <div class="hero__visual" aria-hidden="true">
+        <!-- SVG décoratif léger -->
+        <svg class="hero__svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="200" r="180" fill="none" stroke="var(--sage)" stroke-width="0.5" opacity="0.3"/>
+          <circle cx="200" cy="200" r="140" fill="none" stroke="var(--gold)" stroke-width="0.5" opacity="0.2"/>
+          <circle cx="200" cy="200" r="100" fill="none" stroke="var(--sage)" stroke-width="0.5" opacity="0.15"/>
+          <path d="M200 40 Q240 200 200 360" fill="none" stroke="var(--sage)" stroke-width="1" opacity="0.2"/>
+          <path d="M200 40 Q160 200 200 360" fill="none" stroke="var(--gold)" stroke-width="1" opacity="0.2"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ===== MASSAGES (dynamique via API) ===== -->
+    <section id="massages" class="section" aria-labelledby="massages-title">
+      <div class="section__header">
+        <h2 id="massages-title" class="section__title">Nos Massages</h2>
+        <p class="section__subtitle">Des soins sur-mesure pour chaque besoin</p>
+      </div>
+      <div class="cards" id="massages-grid" role="list" aria-live="polite">
+        <!-- Skeleton loaders -->
+        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+      </div>
+      <div class="section__header">
+        <h2 id="massages-title" class="section__title">Nos Massages</h2>
+        <p class="section__subtitle">Des soins sur-mesure pour chaque besoin</p>
+      </div>
+      <div class="cards" id="massages-grid" role="list" aria-live="polite">
+        <!-- Skeleton loaders -->
+        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+      </div>
+      <p id="massages-error" class="error-msg" role="alert" hidden></p>
+    </section>
+
+    <!-- ===== PRODUITS (statique fallback) ===== -->
+    <section id="produits" class="section section--alt" aria-labelledby="produits-title">
+      <div class="section__header">
+        <h2 id="produits-title" class="section__title">Nos Produits</h2>
+        <p class="section__subtitle">Cosmétiques naturels et éco-responsables</p>
+      </div>
+      <div class="cards" id="produits-grid" role="list">
+        <article class="card" role="listitem">
+          <div class="card__img-wrap">
+            <img src="src/assets/oil.webp" alt="Flacon d'huile bio naturelle pour soins corporels" loading="lazy" width="400" height="300">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Huile Bio</h3>
+            <p class="card__desc">100% naturelle, idéale pour nourrir et protéger la peau.</p>
+            <span class="card__price">24,90 €</span>
+          </div>
+        </article>
+        <article class="card" role="listitem">
+          <div class="card__img-wrap">
+            <img src="/src/assets/creme.webp" alt="Pot de crème hydratante naturelle" loading="lazy" width="400" height="300">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Crème Hydratante</h3>
+            <p class="card__desc">Hydratation intense sans effet gras, formule végétale.</p>
+            <span class="card__price">19,90 €</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== ÉQUIPE ===== -->
+    <section id="equipe" class="section" aria-labelledby="equipe-title">
+      <div class="section__header">
+        <h2 id="equipe-title" class="section__title">Notre Équipe</h2>
+        <p class="section__subtitle">Des professionnels passionnés à votre service</p>
+      </div>
+      <div class="team-grid">
+        <article class="team-card">
+          <div class="team-card__avatar">
+            <img src="src/assets/ana.webp" alt="Ana, massothérapeute spécialiste en relaxation" loading="lazy" width="200" height="200">
+          </div>
+          <h3 class="team-card__name">Ana</h3>
+          <p class="team-card__role">Massage relaxant</p>
+        </article>
+        <article class="team-card">
+          <div class="team-card__avatar">
+            <img src="src/assets/leo.webp" alt="Léo, thérapeute sportif expert en récupération" loading="lazy" width="200" height="200">
+          </div>
+          <h3 class="team-card__name">Léo</h3>
+          <p class="team-card__role">Récupération sportive</p>
+        </article>
+        <article class="team-card">
+          <div class="team-card__avatar">
+            <img src="src/assets/julie.webp" alt="Julie, spécialiste en aromathérapie et soins énergétiques" loading="lazy" width="200" height="200">
+          </div>
+          <h3 class="team-card__name">Julie</h3>
+          <p class="team-card__role">Aromathérapie</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== AVIS ===== -->
+    <section id="avis" class="section section--alt" aria-labelledby="avis-title">
+      <div class="section__header">
+        <h2 id="avis-title" class="section__title">Avis Clients</h2>
+        <p class="section__subtitle">Ce que nos clients disent de nous</p>
+      </div>
+      <div class="testimonials">
+        <blockquote class="testimonial">
+          <p class="testimonial__text">« Un moment magique. Je recommande à 100%. »</p>
+          <footer class="testimonial__author">— Claire</footer>
+        </blockquote>
+        <blockquote class="testimonial">
+          <p class="testimonial__text">« Ambiance calme et équipe très professionnelle. »</p>
+          <footer class="testimonial__author">— Jean</footer>
+        </blockquote>
+        <blockquote class="testimonial">
+          <p class="testimonial__text">« Service parfait du début à la fin. »</p>
+          <footer class="testimonial__author">— Louise</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ===== RÉSERVATION (protégée JWT) ===== -->
+    <section id="reservation" class="section" aria-labelledby="reservation-title">
+      <div class="section__header">
+        <h2 id="reservation-title" class="section__title">Réserver un Soin</h2>
+        <p class="section__subtitle">Choisissez votre massage et votre créneau</p>
+      </div>
+
+      <!-- État : non connecté -->
+      <div id="reservation-locked" class="reservation-locked">
+        <p>🔒 Veuillez vous <a href="#connexion">connecter</a> pour effectuer une réservation.</p>
+      </div>
+
+      <!-- État : connecté -->
+      <form id="reservation-form" class="form reservation-form" hidden novalidate>
+        <div class="form__group">
+          <label for="res-massage" class="form__label">Massage</label>
+          <select id="res-massage" class="form__input" required aria-required="true">
+            <option value="">— Choisir un massage —</option>
+          </select>
+        </div>
+        <div class="form__group">
+          <label for="res-date" class="form__label">Date et heure</label>
+          <input type="datetime-local" id="res-date" class="form__input" required aria-required="true">
+        </div>
+        <button type="submit" class="btn btn--full">Confirmer la réservation</button>
+        <p id="reservation-msg" class="form__msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- ===== CONNEXION / INSCRIPTION ===== -->
+    <section id="connexion" class="section section--alt" aria-labelledby="auth-title">
+      <div class="section__header">
+        <h2 id="auth-title" class="section__title" id="auth-form-title">Connexion</h2>
+        <p class="section__subtitle" id="auth-subtitle">Accédez à votre espace personnel</p>
+      </div>
+
+      <!-- État : déjà connecté -->
+      <div id="account-panel" class="account-panel" hidden>
+        <p class="account-panel__greeting" id="account-greeting">Bienvenue !</p>
+        <div class="account-panel__actions">
+          <a href="#reservation" class="btn">Réserver un soin</a>
+          <button id="logout-btn" class="btn btn--outline">Déconnexion</button>
+          <button id="delete-account-btn" class="btn btn--danger" aria-label="Supprimer définitivement mon compte (RGPD)">Supprimer mon compte</button>
+        </div>
+        <p class="account-panel__rgpd">
+          <small>Conformément au RGPD, vous pouvez supprimer votre compte et toutes vos données à tout moment.</small>
+        </p>
+      </div>
+
+      <!-- Formulaire login -->
+      <form id="login-form" class="form auth-form" novalidate>
+        <div class="form__group">
+          <label for="login-email" class="form__label">Email</label>
+          <input type="email" id="login-email" class="form__input" placeholder="votre@email.fr" required aria-required="true" autocomplete="email">
+        </div>
+        <div class="form__group">
+          <label for="login-password" class="form__label">Mot de passe</label>
+          <input type="password" id="login-password" class="form__input" placeholder="••••••••" required aria-required="true" minlength="6" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn--full">Se connecter</button>
+        <p id="login-msg" class="form__msg" role="status" aria-live="polite"></p>
+        <p class="form__switch">
+          Pas encore de compte ?
+          <button type="button" id="show-signup" class="link-btn">Créer un compte</button>
+        </p>
+      </form>
+
+      <!-- Formulaire inscription -->
+      <form id="signup-form" class="form auth-form" hidden novalidate>
+        <div class="form__group">
+          <label for="signup-nom" class="form__label">Nom</label>
+          <input type="text" id="signup-nom" class="form__input" placeholder="Votre nom" required aria-required="true" autocomplete="name">
+        </div>
+        <div class="form__group">
+          <label for="signup-email" class="form__label">Email</label>
+          <input type="email" id="signup-email" class="form__input" placeholder="votre@email.fr" required aria-required="true" autocomplete="email">
+        </div>
+        <div class="form__group">
+          <label for="signup-tel" class="form__label">Téléphone</label>
+          <input type="tel" id="signup-tel" class="form__input" placeholder="06 12 34 56 78" autocomplete="tel">
+        </div>
+        <div class="form__group">
+          <label for="signup-password" class="form__label">Mot de passe</label>
+          <input type="password" id="signup-password" class="form__input" placeholder="Minimum 6 caractères" required aria-required="true" minlength="6" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn--full">Créer mon compte</button>
+        <p id="signup-msg" class="form__msg" role="status" aria-live="polite"></p>
+        <p class="form__switch">
+          Déjà un compte ?
+          <button type="button" id="show-login" class="link-btn">Se connecter</button>
+        </p>
+      </form>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <div class="section__header">
+        <h2 id="contact-title" class="section__title">Contactez-nous</h2>
+        <p class="section__subtitle">Une question ? Écrivez-nous</p>
+      </div>
+      <form id="contact-form" class="form contact-form" novalidate>
+        <div class="form__group">
+          <label for="contact-nom" class="form__label">Nom</label>
+          <input type="text" id="contact-nom" class="form__input" placeholder="Votre nom" required aria-required="true">
+        </div>
+        <div class="form__group">
+          <label for="contact-email" class="form__label">Email</label>
+          <input type="email" id="contact-email" class="form__input" placeholder="votre@email.fr" required aria-required="true">
+        </div>
+        <div class="form__group">
+          <label for="contact-message" class="form__label">Message</label>
+          <textarea id="contact-message" class="form__input form__textarea" placeholder="Votre message..." required aria-required="true" maxlength="300" rows="4"></textarea>
+          <span class="form__counter" id="contact-counter" aria-live="polite">300 caractères restants</span>
+        </div>
+        <button type="submit" class="btn btn--full">Envoyer</button>
+        <p id="contact-msg" class="form__msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="logo-icon" aria-hidden="true">🌿</span>
+        <span class="logo-text">SereniSpa</span>
+        <p class="footer__tagline">Bien-être éthique &amp; digital</p>
+      </div>
+
+
+    <div class="footer__bottom">
+      <p>&copy; 2026 SereniSpa. Tous droits réservés.</p>
+      <p>
+        <a href="#rgpd">Politique de confidentialité</a> |
+        <a href="#cookies">Cookies</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ========== MODAL RGPD Suppression ========== -->
+  <dialog id="delete-modal" class="modal" aria-labelledby="delete-modal-title">
+    <div class="modal__content">
+      <h3 id="delete-modal-title">Supprimer votre compte ?</h3>
+      <p>Cette action est <strong>irréversible</strong>. Toutes vos données personnelles et réservations seront supprimées définitivement, conformément au RGPD.</p>
+      <div class="modal__actions">
+        <button id="confirm-delete" class="btn btn--danger">Oui, supprimer</button>
+        <button id="cancel-delete" class="btn btn--outline">Annuler</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========== TOAST NOTIFICATIONS ========== -->
+  <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
