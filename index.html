@@ -54,7 +54,12 @@
           <li><a href="#avis" class="nav__link">Avis</a></li>
           <li><a href="#contact" class="nav__link">Contact</a></li>
           <li id="nav-auth">
-            <a href="#connexion" class="nav__link nav__link--cta" id="nav-login-btn">Connexion</a>
+            <a href="#connexion" class="nav__user-btn" id="nav-login-btn" aria-label="Connexion">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </a>
           </li>
         </ul>
       </nav>
@@ -106,55 +111,9 @@
   </div>
   
   <div class="cards" id="massages-grid" role="list" aria-live="polite">
-    
-    <!-- Card 1 -->
-    <article class="card" role="listitem">
-      <div class="card__img-wrap">
-        <img 
-          src="src/assets/massage-sueca.png"
-          alt="Massagem Sueca"
-          loading="lazy"
-        >
-      </div>
-      <div class="card__body">
-        <h3 class="card__title">Massage Sueca</h3>
-        <p class="card__desc">Relaxamento profundo</p>
-        <p class="card__price">€80</p>
-      </div>
-    </article>
-
-    <!-- Card 2 -->
-    <article class="card" role="listitem">
-      <div class="card__img-wrap">
-        <img 
-          src="src/assets/massage-tailandesa.png"
-          alt="Massagem Tailandesa"
-          loading="lazy"
-        >
-      </div>
-      <div class="card__body">
-        <h3 class="card__title">Massage Tailandesa</h3>
-        <p class="card__desc">Energie et vitalite</p>
-        <p class="card__price">€90</p>
-      </div>
-    </article>
-
-    <!-- Card 3 -->
-    <article class="card" role="listitem">
-      <div class="card__img-wrap">
-        <img 
-          src="src/assets/massagem-hotstone.png"
-          alt="Massagem Hot Stone"
-          loading="lazy"
-        >
-      </div>
-      <div class="card__body">
-        <h3 class="card__title">Massagem Hot Stone</h3>
-        <p class="card__desc">Calor terapêutico</p>
-        <p class="card__price">€100</p>
-      </div>
-    </article>
-
+    <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+    <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+    <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
   </div>
   
   <p id="massages-error" class="error-msg" role="alert" hidden></p>
@@ -275,7 +234,7 @@
     <!-- ===== CONNEXION / INSCRIPTION ===== -->
     <section id="connexion" class="section section--alt" aria-labelledby="auth-title">
       <div class="section__header">
-        <h2 id="auth-title" class="section__title" id="auth-form-title">Connexion</h2>
+        <h2 id="auth-title" class="section__title">Connexion</h2>
         <p class="section__subtitle" id="auth-subtitle">Accédez à votre espace personnel</p>
       </div>
 
@@ -372,7 +331,7 @@
         <span class="logo-text">SereniSpa</span>
         <p class="footer__tagline">Bien-être éthique &amp; digital</p>
       </div>
-
+    </div>
 
     <div class="footer__bottom">
       <p>&copy; 2026 SereniSpa. Tous droits réservés.</p>

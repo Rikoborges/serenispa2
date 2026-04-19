@@ -152,6 +152,44 @@ ul {
   background: var(--dore);
 }
 
+/* === Botão utilizador (ícone circular) === */
+.nav__user-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--bordure);
+  color: var(--texte);
+  transition: 0.2s;
+  position: relative;
+}
+
+.nav__user-btn:hover {
+  border-color: var(--vert);
+  color: var(--vert);
+  background: var(--vert-clair);
+}
+
+.nav__user-btn.is-connected {
+  background: var(--vert);
+  border-color: var(--vert);
+  color: var(--blanc);
+}
+
+.nav__user-btn.is-connected::after {
+  content: '';
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 9px;
+  height: 9px;
+  background: #4caf50;
+  border-radius: 50%;
+  border: 2px solid var(--beige);
+}
+
 /* === Burger === */
 .burger {
   display: none;
@@ -193,7 +231,16 @@ ul {
   margin-right: 3px;
 }
 
-/* Estado aberto — forma X */
+/* Estado aberto — forma X com fundo verde */
+.burger[aria-expanded="true"] {
+  background: var(--vert);
+  border-color: var(--vert);
+}
+
+.burger[aria-expanded="true"] .burger__line {
+  background: var(--blanc);
+}
+
 .burger[aria-expanded="true"] .burger__line:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
   width: 18px;
@@ -577,7 +624,7 @@ ul {
 }
 
 .testimonial__text {
-  font-family: 'Monteserait', serif;
+  font-family: 'Cormorant Garamond', serif;
   font-size: 1.05rem;
   font-style: italic;
   color: var(--texte);
@@ -817,11 +864,9 @@ ul {
 .footer__inner {
   max-width: 1100px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
 }
 
 .footer__tagline {

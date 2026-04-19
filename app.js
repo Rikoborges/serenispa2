@@ -73,8 +73,10 @@ function updateUI() {
     document.getElementById('login-form').hidden = isAuth;
     document.getElementById('signup-form').hidden = true; // Sempre esconde signup ao resetar
 
-    // Atualiza Textos
-    document.getElementById('nav-login-btn').textContent = isAuth ? 'Mon Compte' : 'Connexion';
+    // Atualiza botão utilizador
+    const loginBtn = document.getElementById('nav-login-btn');
+    loginBtn.setAttribute('aria-label', isAuth ? `Mon compte (${userName})` : 'Connexion');
+    loginBtn.classList.toggle('is-connected', isAuth);
     document.getElementById('account-greeting').textContent = `Bienvenue, ${userName} !`;
 }
 
