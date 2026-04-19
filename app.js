@@ -4,7 +4,7 @@
 
 const API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3000/api'
-  : 'https://serenispa2.onrender.com/api'; // trocar pela URL real do Render após o deploy
+  : 'https://serenispa2.onrender.com/api';
 
 // --- AUXILIARES ---
 const getToken = () => localStorage.getItem('token');
