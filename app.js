@@ -22,12 +22,9 @@ function showToast(message, type = 'info') {
 
 // --- Données de secours (affichées si l'API est indisponible) ---
 const MASSAGES_FALLBACK = [
-    { _id: '1', nom: 'Massage Relaxant',        description: 'Détente profonde du corps et de l\'esprit, idéal pour évacuer le stress du quotidien.',   prix: 60, duree: 60, image: 'src/assets/masage relaxante.webp' },
-    { _id: '2', nom: 'Récupération Sportive',   description: 'Ciblé sur les muscles fatigués pour une récupération rapide après l\'effort physique.',    prix: 70, duree: 45, image: 'src/assets/depp muscle.webp' },
-    { _id: '3', nom: 'Massage Ayurvédique',     description: 'Technique ancestrale indienne qui rééquilibre le corps, l\'esprit et l\'énergie vitale.',  prix: 80, duree: 75, image: 'src/assets/oil.webp' },
-    { _id: '4', nom: 'Pierres Chaudes',         description: 'Chaleur thérapeutique des pierres volcaniques pour libérer les tensions les plus profondes.', prix: 85, duree: 90, image: 'src/assets/hotstone.webp' },
-    { _id: '5', nom: 'Aromathérapie',           description: 'Huiles essentielles biologiques sélectionnées pour éveiller vos sens et régénérer la peau.', prix: 65, duree: 60, image: 'src/assets/creme.webp' },
-    { _id: '6', nom: 'Éclat du Visage',         description: 'Massage facial drainant qui illumine le teint, détend les traits et efface la fatigue.',    prix: 55, duree: 45, image: 'src/assets/hero-bg.webp' },
+    { _id: '1', nom: 'Massage Suédois',     description: 'Détente profonde du corps et de l\'esprit, idéal pour évacuer le stress du quotidien.',          prix: 80,  duree: 60, image: 'src/assets/massage-sueca.png' },
+    { _id: '2', nom: 'Massage Thaïlandais', description: 'Technique dynamique qui libère les tensions, stimule la circulation et redonne de l\'énergie.',   prix: 90,  duree: 60, image: 'src/assets/massage-tailandesa.png' },
+    { _id: '3', nom: 'Pierres Chaudes',     description: 'Chaleur thérapeutique des pierres volcaniques pour libérer les tensions les plus profondes.',     prix: 100, duree: 90, image: 'src/assets/massagem-hotstone.png' },
 ];
 
 function renderMassages(massages) {

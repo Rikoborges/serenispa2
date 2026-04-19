@@ -99,29 +99,66 @@
     </section>
 
     <!-- ===== MASSAGES (dynamique via API) ===== -->
-    <section id="massages" class="section" aria-labelledby="massages-title">
-      <div class="section__header">
-        <h2 id="massages-title" class="section__title">Nos Massages</h2>
-        <p class="section__subtitle">Des soins sur-mesure pour chaque besoin</p>
+   <section id="massages" class="section" aria-labelledby="massages-title">
+  <div class="section__header">
+    <h2 id="massages-title" class="section__title">Nos Massages</h2>
+    <p class="section__subtitle">Des soins sur-mesure pour chaque besoin</p>
+  </div>
+  
+  <div class="cards" id="massages-grid" role="list" aria-live="polite">
+    
+    <!-- Card 1 -->
+    <article class="card" role="listitem">
+      <div class="card__img-wrap">
+        <img 
+          src="src/assets/massage-sueca.png"
+          alt="Massagem Sueca"
+          loading="lazy"
+        >
       </div>
-      <div class="cards" id="massages-grid" role="list" aria-live="polite">
-        <!-- Skeleton loaders -->
-        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
-        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
-        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+      <div class="card__body">
+        <h3 class="card__title">Massage Sueca</h3>
+        <p class="card__desc">Relaxamento profundo</p>
+        <p class="card__price">€80</p>
       </div>
-      <div class="section__header">
-        <h2 id="massages-title" class="section__title">Nos Massages</h2>
-        <p class="section__subtitle">Des soins sur-mesure pour chaque besoin</p>
+    </article>
+
+    <!-- Card 2 -->
+    <article class="card" role="listitem">
+      <div class="card__img-wrap">
+        <img 
+          src="src/assets/massage-tailandesa.png"
+          alt="Massagem Tailandesa"
+          loading="lazy"
+        >
       </div>
-      <div class="cards" id="massages-grid" role="list" aria-live="polite">
-        <!-- Skeleton loaders -->
-        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
-        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
-        <article class="card card--skeleton" aria-hidden="true"><div class="card__img-wrap skeleton-img"></div><div class="card__body"><div class="skeleton-line"></div><div class="skeleton-line skeleton-line--short"></div></div></article>
+      <div class="card__body">
+        <h3 class="card__title">Massage Tailandesa</h3>
+        <p class="card__desc">Energie et vitalite</p>
+        <p class="card__price">€90</p>
       </div>
-      <p id="massages-error" class="error-msg" role="alert" hidden></p>
-    </section>
+    </article>
+
+    <!-- Card 3 -->
+    <article class="card" role="listitem">
+      <div class="card__img-wrap">
+        <img 
+          src="src/assets/massagem-hotstone.png"
+          alt="Massagem Hot Stone"
+          loading="lazy"
+        >
+      </div>
+      <div class="card__body">
+        <h3 class="card__title">Massagem Hot Stone</h3>
+        <p class="card__desc">Calor terapêutico</p>
+        <p class="card__price">€100</p>
+      </div>
+    </article>
+
+  </div>
+  
+  <p id="massages-error" class="error-msg" role="alert" hidden></p>
+</section>
 
     <!-- ===== PRODUITS (statique fallback) ===== -->
     <section id="produits" class="section section--alt" aria-labelledby="produits-title">
