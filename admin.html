@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — SereniSpa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .admin-wrap {
+      max-width: 900px;
+      margin: 6rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .admin-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--rouge);
+    }
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .stat-card {
+      background: var(--blanc);
+      border: 1px solid var(--beige-bord);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .stat-card__num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      color: var(--rouge);
+      line-height: 1;
+    }
+    .stat-card__label {
+      font-size: 0.85rem;
+      color: var(--texte-gris);
+      margin-top: 0.4rem;
+    }
+    .admin-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--titres);
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--beige-bord);
+      padding-bottom: 0.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-bottom: 3rem;
+    }
+    th {
+      text-align: left;
+      padding: 0.6rem 0.8rem;
+      background: var(--beige-clair);
+      color: var(--titres);
+      font-weight: 700;
+    }
+    td {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--beige-bord);
+      color: var(--texte-gris);
+    }
+    tr:hover td { background: #faf9f7; }
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #d4edda;
+      color: #155724;
+    }
+    .badge--annulé { background: #f8d7da; color: #721c24; }
+    #admin-error {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      display: none;
+    }
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      td { border: none; padding: 0.3rem 0; }
+      td::before { font-weight: 700; color: var(--titres); content: attr(data-label) ': '; }
+      tr { border: 1px solid var(--beige-bord); border-radius: 8px; padding: 0.8rem; margin-bottom: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header" role="banner">
+    <nav class="nav container" aria-label="Navigation principale">
+      <a href="index.html" class="nav__logo" aria-label="SereniSpa — Accueil">
+        <span class="logo-icon" aria-hidden="true">🌿</span>
+        <span class="logo-text">SereniSpa</span>
+      </a>
+      <span style="font-size:0.8rem;color:var(--texte-gris);padding:0 1rem;">Tableau de bord Admin</span>
+      <button id="logout-btn" class="btn btn--outline" style="margin-left:auto;">Déconnexion</button>
+    </nav>
+  </header>
+
+  <main class="admin-wrap">
+    <div class="admin-header">
+      <h1>Tableau de bord</h1>
+      <p id="admin-greeting" style="color:var(--texte-gris);font-size:0.9rem;"></p>
+    </div>
+
+    <p id="admin-error">Accès refusé ou session expirée. <a href="index.html">Retour au site</a></p>
+
+    <div id="admin-content" style="display:none;">
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card__num" id="stat-total">—</div>
+          <div class="stat-card__label">Réservations totales</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num" id="stat-revenue">—</div>
+          <div class="stat-card__label">Chiffre d'affaires estimé</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num" id="stat-types">—</div>
+          <div class="stat-card__label">Types de massage</div>
+        </div>
+      </div>
+
+      <div class="admin-section">
+        <h2>Réservations par massage</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Massage</th>
+              <th>Réservations</th>
+              <th>CA estimé</th>
+            </tr>
+          </thead>
+          <tbody id="table-by-massage"></tbody>
+        </table>
+      </div>
+
+      <div class="admin-section">
+        <h2>Réservations récentes</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Email</th>
+              <th>Massage</th>
+              <th>Date</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody id="table-recent"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="admin.js" defer></script>
+</body>
+</html>

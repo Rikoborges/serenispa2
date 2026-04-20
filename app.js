@@ -260,5 +260,28 @@ document.getElementById('cookie-decline').onclick = () => {
     cookieBanner.setAttribute('hidden', '');
 };
 
+// --- FOOTER: Modais Politique & Cookies ---
+const rgpdModal = document.getElementById('rgpd-modal');
+const cookiesModal = document.getElementById('cookies-modal');
+
+document.getElementById('open-rgpd-modal').addEventListener('click', (e) => {
+    e.preventDefault();
+    rgpdModal.showModal();
+});
+document.getElementById('close-rgpd-modal').addEventListener('click', () => rgpdModal.close());
+
+document.getElementById('open-cookies-modal').addEventListener('click', (e) => {
+    e.preventDefault();
+    cookiesModal.showModal();
+});
+document.getElementById('close-cookies-modal').addEventListener('click', () => cookiesModal.close());
+
+// Fechar modais ao clicar fora
+[rgpdModal, cookiesModal].forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.close();
+    });
+});
+
 
 

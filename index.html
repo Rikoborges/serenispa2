@@ -343,11 +343,39 @@
     <div class="footer__bottom">
       <p>&copy; 2026 SereniSpa. Tous droits réservés.</p>
       <p>
-        <a href="#rgpd">Politique de confidentialité</a> |
-        <a href="#cookies">Cookies</a>
+        <a href="#" id="open-rgpd-modal">Politique de confidentialité</a> |
+        <a href="#" id="open-cookies-modal">Cookies</a>
       </p>
     </div>
   </footer>
+
+  <!-- ========== MODAL Politique de confidentialité ========== -->
+  <dialog id="rgpd-modal" class="modal modal--wide" aria-labelledby="rgpd-modal-title">
+    <div class="modal__content">
+      <h3 id="rgpd-modal-title">Politique de confidentialité</h3>
+      <p><strong>Données collectées</strong><br>Nous collectons uniquement les données nécessaires à la gestion de vos réservations : nom, adresse e-mail, numéro de téléphone (optionnel) et historique de réservations.</p>
+      <p><strong>Utilisation</strong><br>Vos données sont utilisées exclusivement pour confirmer vos réservations et vous contacter en cas de besoin. Elles ne sont jamais vendues ni partagées avec des tiers.</p>
+      <p><strong>Conservation</strong><br>Vos données sont conservées tant que votre compte est actif. Vous pouvez demander leur suppression à tout moment depuis votre espace personnel.</p>
+      <p><strong>Vos droits (RGPD)</strong><br>Conformément au Règlement Général sur la Protection des Données, vous disposez d'un droit d'accès, de rectification, d'effacement et de portabilité de vos données. Contact : <a href="mailto:contact@serenispa.fr">contact@serenispa.fr</a></p>
+      <div class="modal__actions">
+        <button id="close-rgpd-modal" class="btn btn--outline">Fermer</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========== MODAL Cookies ========== -->
+  <dialog id="cookies-modal" class="modal modal--wide" aria-labelledby="cookies-modal-title">
+    <div class="modal__content">
+      <h3 id="cookies-modal-title">Politique des cookies</h3>
+      <p><strong>Cookies essentiels</strong><br>Ce site utilise uniquement des cookies essentiels au bon fonctionnement du service : authentification (token JWT) et préférences de consentement.</p>
+      <p><strong>Aucun cookie publicitaire</strong><br>Nous n'utilisons aucun cookie de pistage, publicitaire ou analytique tiers. Aucune donnée n'est partagée avec des plateformes externes.</p>
+      <p><strong>Durée</strong><br>Le cookie de session expire après 7 jours. Le cookie de consentement est conservé jusqu'à ce que vous effaciez vos données de navigation.</p>
+      <p><strong>Gestion</strong><br>Vous pouvez refuser les cookies non essentiels via la bannière qui s'affiche lors de votre première visite, ou en effaçant les données de votre navigateur.</p>
+      <div class="modal__actions">
+        <button id="close-cookies-modal" class="btn btn--outline">Fermer</button>
+      </div>
+    </div>
+  </dialog>
 
   <!-- ========== MODAL RGPD Suppression ========== -->
   <dialog id="delete-modal" class="modal" aria-labelledby="delete-modal-title">

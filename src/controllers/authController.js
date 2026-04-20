@@ -45,12 +45,12 @@ exports.connexion = async (req, res) => {
 
     // 3. Créer le Token JWT (valable 7 jours comme dans le PDF)
     const token = jwt.sign(
-      { userId: user._id, role: 'client' },
+      { userId: user._id, role: user.isAdmin ? 'admin' : 'client', isAdmin: user.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
-    res.status(200).json({ token, user: { nom: user.nom }, message: "Connexion réussie !" });
+    res.status(200).json({ token, user: { nom: user.nom, isAdmin: user.isAdmin }, message: "Connexion réussie !" });
   } catch (error) {
     res.status(500).json({ message: "Erreur serveur", error });
   }

@@ -802,6 +802,18 @@ ul {
   background: rgba(0,0,0,0.4);
 }
 
+.modal--wide {
+  max-width: 560px;
+}
+
+.modal--wide .modal__content p {
+  margin-bottom: 0.8rem;
+}
+
+.modal--wide .modal__content a {
+  color: var(--rouge);
+}
+
 .modal__content h3 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.3rem;

@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     
     // 3. Ajouter les infos de l'utilisateur à la requête pour la suite
-    req.auth = { userId: decodedToken.userId };
+    req.auth = { userId: decodedToken.userId, isAdmin: decodedToken.isAdmin === true };
     
     // 4. Passer à l'étape suivante
     next();

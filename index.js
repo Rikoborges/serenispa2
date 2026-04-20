@@ -8,6 +8,7 @@ const connectDB = require('./src/config/db');
 const authRoutes = require('./src/routes/authRoutes');
 const reservationRoutes = require('./src/routes/reservationRoutes');
 const massageRoutes = require('./src/routes/massageRoutes');
+const adminRoutes = require('./src/routes/adminRoutes');
 
 // Modèles pour la route utilisateur
 const User = require('./src/models/user');
@@ -54,6 +55,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api/auth', authRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/massages', massageRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Route RGPD : supprimer son propre compte
 app.delete('/api/users/me', auth, async (req, res) => {
