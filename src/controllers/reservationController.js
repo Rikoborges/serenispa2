@@ -1,8 +1,10 @@
 const reservationService = require('../services/reservationService');
+const User = require('../models/user');
+const Massage = require('../models/massage');
+const { sendReservationConfirmation } = require('../services/emailService');
 
 exports.creerReservation = async (req, res) => {
   try {
-    // Le controller ne sait pas COMMENT on crée, il demande juste au SERVICE de le faire
     const reservation = await reservationService.createReservation(
       req.auth.userId,
       req.body.massageId,
@@ -10,6 +12,23 @@ exports.creerReservation = async (req, res) => {
     );
 
     res.status(201).json({ message: "Réservation confirmée !", reservation });
+
+    // Email en arrière-plan (ne bloque pas la réponse)
+    try {
+      const [user, massage] = await Promise.all([
+        User.findById(req.auth.userId),
+        Massage.findById(req.body.massageId),
+      ]);
+      if (user && massage) {
+        await sendReservationConfirmation({
+          to: user.email,
+          nom: user.nom,
+          massage: massage.nom,
+          date: req.body.date,
+        });
+      }
+    } catch (_) {}
+
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
