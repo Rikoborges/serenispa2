@@ -210,60 +210,55 @@ document.getElementById('contact-message').addEventListener('input', function ()
 });
 
 // --- INICIALIZAÇÃO ---
-document.addEventListener('DOMContentLoaded', () => {
-    chargerMassages();
-    updateUI();
+chargerMassages();
+updateUI();
 
-    // Burger Menu Mobile
-    const burger = document.getElementById('burger-btn');
-    const menu = document.getElementById('nav-menu');
+// Burger Menu Mobile
+const burger = document.getElementById('burger-btn');
+const menu = document.getElementById('nav-menu');
 
-    // Cria o overlay dinamicamente
-    const overlay = document.createElement('div');
-    overlay.className = 'nav-overlay';
-    document.body.appendChild(overlay);
+const overlay = document.createElement('div');
+overlay.className = 'nav-overlay';
+document.body.appendChild(overlay);
 
-    function openMenu() {
-        burger.setAttribute('aria-expanded', 'true');
-        menu.classList.add('is-open');
-        overlay.classList.add('is-open');
-        document.body.style.overflow = 'hidden'; // impede scroll da página
-    }
+function openMenu() {
+    burger.setAttribute('aria-expanded', 'true');
+    menu.classList.add('is-open');
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+}
 
-    function closeMenu() {
-        burger.setAttribute('aria-expanded', 'false');
-        menu.classList.remove('is-open');
-        overlay.classList.remove('is-open');
-        document.body.style.overflow = '';
-    }
+function closeMenu() {
+    burger.setAttribute('aria-expanded', 'false');
+    menu.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+}
 
-    burger.onclick = () => {
-        const isOpen = burger.getAttribute('aria-expanded') === 'true';
-        isOpen ? closeMenu() : openMenu();
-    };
+burger.onclick = () => {
+    const isOpen = burger.getAttribute('aria-expanded') === 'true';
+    isOpen ? closeMenu() : openMenu();
+};
 
-    // Fecha ao clicar no overlay
-    overlay.onclick = closeMenu;
+overlay.onclick = closeMenu;
 
-    // Fecha ao clicar em qualquer link do menu
-    menu.querySelectorAll('.nav__link').forEach(link => {
-        link.addEventListener('click', closeMenu);
-    });
-
-    // Cookie Banner RGPD
-    const cookieBanner = document.getElementById('cookie-banner');
-    if (!localStorage.getItem('cookieConsent')) {
-        cookieBanner.removeAttribute('hidden');
-    }
-    document.getElementById('cookie-accept').onclick = () => {
-        localStorage.setItem('cookieConsent', 'accepted');
-        cookieBanner.setAttribute('hidden', '');
-    };
-    document.getElementById('cookie-decline').onclick = () => {
-        localStorage.setItem('cookieConsent', 'declined');
-        cookieBanner.setAttribute('hidden', '');
-    };
+menu.querySelectorAll('.nav__link').forEach(link => {
+    link.addEventListener('click', closeMenu);
 });
+
+// Cookie Banner RGPD
+const cookieBanner = document.getElementById('cookie-banner');
+if (!localStorage.getItem('cookieConsent')) {
+    cookieBanner.removeAttribute('hidden');
+}
+document.getElementById('cookie-accept').onclick = () => {
+    localStorage.setItem('cookieConsent', 'accepted');
+    cookieBanner.setAttribute('hidden', '');
+};
+document.getElementById('cookie-decline').onclick = () => {
+    localStorage.setItem('cookieConsent', 'declined');
+    cookieBanner.setAttribute('hidden', '');
+};
 
 
 
