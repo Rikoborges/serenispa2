@@ -12,32 +12,25 @@ const Massage = mongoose.model('Massage', massageSchema);
 
 const massages = [
   {
-    nom: 'Massage Relaxant',
+    nom: 'Massage Suédois',
     description: "Détente profonde du corps et de l'esprit, idéal pour évacuer le stress du quotidien.",
-    prix: 60,
+    prix: 80,
     duree: 60,
-    image: 'src/assets/masage relaxante.webp'
+    image: 'src/assets/massage-sueca.webp'
   },
   {
-    nom: 'Récupération Sportive',
-    description: "Ciblé sur les muscles fatigués pour une récupération rapide après l'effort physique.",
-    prix: 70,
-    duree: 45,
-    image: 'src/assets/depp muscle.webp'
-  },
-  {
-    nom: 'Aromathérapie',
-    description: "Huiles essentielles biologiques sélectionnées pour éveiller vos sens et régénérer la peau.",
-    prix: 65,
+    nom: 'Massage Thaïlandais',
+    description: "Technique dynamique qui libère les tensions, stimule la circulation et redonne de l'énergie.",
+    prix: 90,
     duree: 60,
-    image: 'src/assets/creme.webp'
+    image: 'src/assets/massage-tailandesa.webp'
   },
   {
     nom: 'Pierres Chaudes',
     description: 'Chaleur thérapeutique des pierres volcaniques pour libérer les tensions les plus profondes.',
-    prix: 85,
+    prix: 100,
     duree: 90,
-    image: 'src/assets/hotstone.webp'
+    image: 'src/assets/massagem-hotstone.webp'
   }
 ];
 
