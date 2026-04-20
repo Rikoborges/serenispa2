@@ -5,5 +5,7 @@ const auth = require('../middleware/authMiddleware'); // Notre douane
 const reservationController = require('../controllers/reservationController');
 
 router.post('/', auth, reservationController.creerReservation);
+router.put('/:id', auth, reservationController.modifierReservation);
+router.delete('/:id', auth, reservationController.supprimerReservation);
 
 module.exports = router;

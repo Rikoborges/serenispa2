@@ -23,6 +23,29 @@ class ReservationService {
 
         return await reservation.save();
     }
+
+    async updateReservation(reservationId, userId, date) {
+        const reservation = await Reservation.findById(reservationId);
+
+        if (!reservation) throw new Error("Réservation introuvable.");
+        if (reservation.userId.toString() !== userId) throw new Error("Action non autorisée.");
+
+        const selectedDate = new Date(date);
+        if (selectedDate < new Date()) throw new Error("La date ne peut pas être dans le passé.");
+
+        reservation.date = date;
+        return await reservation.save();
+    }
+
+    async deleteReservation(reservationId, userId) {
+        const reservation = await Reservation.findById(reservationId);
+
+        if (!reservation) throw new Error("Réservation introuvable.");
+        if (reservation.userId.toString() !== userId) throw new Error("Action non autorisée.");
+
+        await reservation.deleteOne();
+        return { message: "Réservation annulée." };
+    }
 }
 
 module.exports = new ReservationService();
