@@ -31,6 +31,13 @@ const massages = [
     prix: 100,
     duree: 90,
     image: 'src/assets/massagem-hotstone.webp'
+  },
+  {
+    nom: 'Massage Relaxant',
+    description: 'Massage thérapeutique doux pour favoriser une détente profonde et apaiser le corps.',
+    prix: 75,
+    duree: 60,
+    image: 'src/assets/massage-relaxante.webp'
   }
 ];
 
@@ -42,7 +49,7 @@ async function seed() {
   console.log('Massages antigos apagados');
 
   await Massage.insertMany(massages);
-  console.log('3 massages novos inseridos com sucesso');
+  console.log('4 massages novos inseridos com sucesso');
 
   await mongoose.disconnect();
   process.exit(0);
