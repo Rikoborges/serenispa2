@@ -14,5 +14,11 @@
     "source": "/(.*)",
     "headers": [{ "key": "x-vercel-skip-toolbar", "value": "1" }]
   }
-]
+],
+
+
+  "env": {
+    "VERCEL_TOOLBAR_ENABLED": "false"
+  
+}
 }

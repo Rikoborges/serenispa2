@@ -1094,3 +1094,8 @@ ul {
     transition: none !important;
   }
 }
+
+/* Esconde Vercel Toolbar */
+iframe[src*="vercel.com/toolbar"] {
+  display: none !important;
+}
