@@ -26,11 +26,11 @@ const massages = [
     image: 'src/assets/depp muscle.webp'
   },
   {
-    nom: 'Massage Ayurvédique',
-    description: "Technique ancestrale indienne qui rééquilibre le corps, l'esprit et l'énergie vitale.",
-    prix: 80,
-    duree: 75,
-    image: 'src/assets/oil.webp'
+    nom: 'Aromathérapie',
+    description: "Huiles essentielles biologiques sélectionnées pour éveiller vos sens et régénérer la peau.",
+    prix: 65,
+    duree: 60,
+    image: 'src/assets/creme.webp'
   },
   {
     nom: 'Pierres Chaudes',
