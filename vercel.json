@@ -8,5 +8,11 @@
   ],
   "routes": [
     { "src": "/(.*)", "dest": "/$1" }
-  ]
+  ],
+  "headers": [
+  {
+    "source": "/(.*)",
+    "headers": [{ "key": "x-vercel-skip-toolbar", "value": "1" }]
+  }
+]
 }
