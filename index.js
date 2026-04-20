@@ -27,7 +27,8 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://serenispa2.vercel.app', // trocar pela URL real do Vercel após o deploy
+    'http://127.0.0.1:5500',
+    'https://serenispa2.vercel.app',
   ],
   credentials: true,
 }));

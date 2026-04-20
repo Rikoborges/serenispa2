@@ -941,6 +941,8 @@ ul {
 @media (max-width: 768px) {
   .burger {
     display: flex;
+    position: relative;
+    z-index: 200;
   }
 
   .nav__list {
@@ -960,6 +962,17 @@ ul {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 105;
     overflow-y: auto;
+  }
+
+  #nav-auth {
+    margin-top: auto;
+    padding: 1rem 1.8rem;
+    border-top: 1px solid var(--bordure);
+  }
+
+  #nav-auth .nav__user-btn {
+    width: 40px;
+    height: 40px;
   }
 
   .nav__list.is-open {
