@@ -1,42 +1,86 @@
-# SereniSpa - API de Gestion de Massages & Réservations
+# 🌿 SereniSpa — Système de réservation de massages
 
-Bienvenue sur le projet **SereniSpa**, une application de gestion de massages conçue pour offrir une expérience relaxante et sécurisée. Ce projet a été développé dans le cadre de ma certification (Titre RNCP), en suivant les bonnes pratiques de développement Node.js.
+## 📋 À propos
 
-##  Fonctionnalités
-- **Authentification sécurisée** : Inscription et connexion avec hachage de mot de passe (Bcrypt).
-- **Gestion des Massages** : Consultation du catalogue de soins.
-- **Réservations** : Système de réservation lié à un compte utilisateur.
-- **Sécurité renforcée** : Protection des routes via des middlewares et des tokens JWT.
-- **Validation** : Contrôle strict des données d'entrée avec Joi.
+SereniSpa est un **système de réservation de massages** professionnel conçu pour augmenter les conversions et simplifier la gestion opérationnelle d'un spa.
 
-##  Stack Technique
-- **Runtime** : Node.js
-- **Framework** : Express.js
-- **Base de données** : MongoDB Atlas (NoSQL)
-- **Modélisation** : Mongoose
-- **Sécurité** : Helmet, CORS, Bcrypt, JSON Web Token (JWT)
-- **Tests** : Jest & Supertest
-- **Documentation** : Swagger (OpenAPI 3.0)
-
-##  Architecture (MVC)
-Le projet suit le modèle **Modèle-Vue-Contrôleur** pour une meilleure séparation des responsabilités :
-- `src/models` : Définition des schémas de données.
-- `src/controllers` : Logique métier et interaction avec la base de données.
-- `src/routes` : Définition des points de terminaison (endpoints) de l'API.
-- `src/middleware` : Fonctions de sécurité (Auth, Validation).
-
-##  Sécurité et RGPD
-- **Hachage** : Utilisation de `bcrypt` pour ne jamais stocker de mots de passe en clair.
-- **JWT** : Authentification stateless pour sécuriser les échanges.
-- **Sanitisation** : Utilisation de `helmet` pour protéger contre les vulnérabilités HTTP courantes.
-
-##  Documentation & Tests
-- **Swagger** : La documentation interactive est disponible sur `/api-docs` une fois le serveur lancé.
-- **Tests** : Exécution des tests d'intégration avec la commande `npm test`.
+**Stack:** Node.js + Express + MongoDB + Frontend vanille (HTML/CSS/JS)
 
 ---
-*Projet réalisé pour la validation du titre RNCP.*
 
-## 🌐 Déploiement
-- **Frontend** : Hébergé sur Vercel ([https://serenispa-devs.vercel.app/](https://serenispa-devs.vercel.app/))
-- **Backend** : API REST connectée à MongoDB Atlas.
+## 🎯 Problèmes identifiés et solutions
+
+### ❌ PROBLÈME 1: Clients ne voient pas les horaires disponibles
+
+**Avant:** Formulaire avec un simple `<input datetime-local>` vide. Client ne savait pas quels horaires étaient libres.
+
+**Solution:** API `/api/reservations/available-slots` qui retourne les créneaux libres en temps réel.
+- ✅ Horaires 9h-18h, fermé 13h-14h (almoço)
+- ✅ Slots de 60 min (55 min massage + 5 min pause)
+- ✅ Affichage visuel clicable sur le frontend
+- ✅ Montre la disponibilité par thérapeute
+
+**Impact:** Client voit clairement les options → augmente confiance et conversions
+
+---
+
+### ❌ PROBLÈME 2: Double-booking possible
+
+**Avant:** Deux clients pouvaient réserver le même thérapeute au même horaire.
+
+**Solution:** Validation lors de la création de réservation.
+- ✅ Vérife que le créneau est libre pour le thérapeute
+- ✅ Respecte les horaires d'ouverture
+- ✅ Empêche les conflits de planning
+
+**Impact:** Zéro conflit d'agendement → gestion viable
+
+---
+
+### ❌ PROBLÈME 3: Client ne voit pas ses réservations
+
+**Avant:** Après booking, client n'avait aucune visibilité sur son agendement.
+
+**Solution:** Nouvelle page "Mes Réservations" (`my-reservations.html`)
+- ✅ Liste toutes les réservations de l'utilisateur
+- ✅ Affiche: massage, thérapeute, date/heure, prix
+- ✅ Permet d'annuler les futures réservations
+- ✅ Sépare réservations à venir vs passées
+
+**Impact:** Client confiance augmente + peut gérer ses RDV
+
+---
+
+### ❌ PROBLÈME 4: Admin ne contrôle pas le planning par thérapeute
+
+**Avant:** Dashboard simple avec juste stats globales.
+
+**Solution:** Dashboard admin amélioré avec vues par thérapeute.
+- ✅ Statistiques par thérapeute (charge de travail)
+- ✅ Prochaines 7 jours (planning opérationnel)
+- ✅ Réservations récentes avec thérapeute
+- ✅ Chiffre d'affaires par service
+
+**Impact:** Admin voit qui est surchargé → meilleure répartition
+
+---
+
+### ❌ PROBLÈME 5: Utilisateurs ne comprennent pas l'intérêt du massage
+
+**Avant:** Site juste pour booker. Pas d'éducation.
+
+**Solution:** 3 sections éducatives + FAQ pour SEO
+- ✅ "Pourquoi faire un massage ?" (établit la valeur)
+- ✅ "Les bienfaits" (6 cartes visuelles)
+- ✅ "FAQ" (7 questions fréquentes)
+- ✅ Multiple CTAs pour conversion
+
+**Impact:** Utilisateur apprend → confiance → réserve + SEO amélioré
+
+---
+
+## 🚀 Démarrer rapidement
+
+### Installation
+```bash
+npm install
