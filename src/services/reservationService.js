@@ -7,8 +7,8 @@ class ReservationService {
             throw new Error("Massage ID, therapist ID et date sont obligatoires.");
         }
 
-        // Valider que le créneau est disponible
-        await availabilityService.validateSlot(therapistId, date, 55);
+        // Valider que le créneau est disponible (45 minutos)
+        await availabilityService.validateSlot(therapistId, date, 45);
 
         // Créer la réservation
         const reservation = new Reservation({
@@ -27,8 +27,8 @@ class ReservationService {
         if (!reservation) throw new Error("Réservation introuvable.");
         if (reservation.userId.toString() !== userId) throw new Error("Action non autorisée.");
 
-        // Valider le nouveau créneau
-        await availabilityService.validateSlot(reservation.therapistId, date, 55);
+        // Valider le nouveau créneau (45 minutos)
+        await availabilityService.validateSlot(reservation.therapistId, date, 45);
 
         reservation.date = date;
         return await reservation.save();
