@@ -34,6 +34,7 @@ class AvailabilityService {
     const slots = [];
     const now = new Date();
     const { start, end, lunchStart, lunchEnd } = this.getBusinessHours();
+    const MASSAGE_DURATION = 45; // 45 minutos
 
     // Générer les slots pour les 14 prochains jours
     for (let day = 0; day < daysAhead; day++) {
@@ -53,7 +54,7 @@ class AvailabilityService {
         if (slotStart < now) continue;
 
         // Vérifier si le therapist est libre à cette heure
-        const hasConflict = await this.hasConflict(therapistId, slotStart, 55); // 55 min duration
+        const hasConflict = await this.hasConflict(therapistId, slotStart, MASSAGE_DURATION);
 
         slots.push({
           time: slotStart.toISOString(),
@@ -83,7 +84,7 @@ class AvailabilityService {
     return !!conflict;
   }
 
-  async validateSlot(therapistId, slotTime, durationMinutes = 55) {
+  async validateSlot(therapistId, slotTime, durationMinutes = 45) {
     const slot = new Date(slotTime);
 
     // Vérifier que c'est dans les heures d'ouverture
