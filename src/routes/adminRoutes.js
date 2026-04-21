@@ -6,11 +6,12 @@ const Reservation = require('../models/Reservation');
 const Therapist = require('../models/Therapist');
 const Massage = require('../models/massage');
 
-// GET /api/admin/stats — tableau de bord admin
+// GET /api/admin/stats — tableau de bord admin amélioré
 router.get('/stats', auth, adminMiddleware, async (req, res) => {
   try {
     const total = await Reservation.countDocuments();
 
+    // Par massage
     const byMassage = await Reservation.aggregate([
       {
         $lookup: {
@@ -33,14 +34,52 @@ router.get('/stats', auth, adminMiddleware, async (req, res) => {
       { $sort: { count: -1 } }
     ]);
 
+    // Par therapist
+    const byTherapist = await Reservation.aggregate([
+      {
+        $lookup: {
+          from: 'therapists',
+          localField: 'therapistId',
+          foreignField: '_id',
+          as: 'therapist'
+        }
+      },
+      { $unwind: '$therapist' },
+      {
+        $group: {
+          _id: '$therapist._id',
+          nom: { $first: '$therapist.nom' },
+          count: { $sum: 1 },
+          specialite: { $first: '$therapist.specialite' }
+        }
+      },
+      { $sort: { count: -1 } }
+    ]);
+
+    // Réservations récentes
     const recent = await Reservation.find()
       .sort({ date: -1 })
-      .limit(10)
+      .limit(15)
       .populate('userId', 'nom email')
       .populate('massageId', 'nom prix')
+      .populate('therapistId', 'nom specialite');
+
+    // Prochaines réservations (futurs 7 jours)
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
+
+    const upcoming = await Reservation.find({
+      date: { $gte: tomorrow, $lte: nextWeek },
+      statut: 'confirmé'
+    })
+      .sort({ date: 1 })
+      .populate('userId', 'nom email telephone')
+      .populate('massageId', 'nom')
       .populate('therapistId', 'nom');
 
-    res.json({ total, byMassage, recent });
+    res.json({ total, byMassage, byTherapist, recent, upcoming });
   } catch (error) {
     res.status(500).json({ message: "Erreur serveur", error });
   }
