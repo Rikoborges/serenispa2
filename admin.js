@@ -39,7 +39,7 @@ function showError() {
   document.getElementById('admin-error').style.display = 'block';
 }
 
-function renderStats({ total, byMassage, recent }) {
+function renderStats({ total, byMassage, byTherapist, recent, upcoming }) {
   document.getElementById('admin-content').style.display = 'block';
 
   document.getElementById('stat-total').textContent = total;
@@ -49,6 +49,18 @@ function renderStats({ total, byMassage, recent }) {
 
   document.getElementById('stat-types').textContent = byMassage.length;
 
+  // Par thérapeute
+  if (byTherapist && byTherapist.length > 0) {
+    document.getElementById('table-by-therapist').innerHTML = byTherapist.map(t => `
+      <tr>
+        <td data-label="Thérapeute">${t.nom}</td>
+        <td data-label="Spécialité">${t.specialite || '—'}</td>
+        <td data-label="Réservations">${t.count}</td>
+      </tr>
+    `).join('');
+  }
+
+  // Par massage
   document.getElementById('table-by-massage').innerHTML = byMassage.map(m => `
     <tr>
       <td data-label="Massage">${m.nom}</td>
@@ -57,6 +69,26 @@ function renderStats({ total, byMassage, recent }) {
     </tr>
   `).join('');
 
+  // Prochaines réservations
+  if (upcoming && upcoming.length > 0) {
+    document.getElementById('table-upcoming').innerHTML = upcoming.map(r => {
+      const date = new Date(r.date).toLocaleString('fr-FR', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+      return `
+        <tr>
+          <td data-label="Client">${r.userId?.nom || '—'}</td>
+          <td data-label="Téléphone">${r.userId?.telephone || '—'}</td>
+          <td data-label="Massage">${r.massageId?.nom || '—'}</td>
+          <td data-label="Thérapeute">${r.therapistId?.nom || '—'}</td>
+          <td data-label="Date">${date}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Réservations récentes
   document.getElementById('table-recent').innerHTML = recent.map(r => {
     const date = new Date(r.date).toLocaleString('fr-FR', {
       day: '2-digit', month: '2-digit', year: 'numeric',
@@ -69,6 +101,7 @@ function renderStats({ total, byMassage, recent }) {
         <td data-label="Client">${r.userId?.nom || '—'}</td>
         <td data-label="Email">${r.userId?.email || '—'}</td>
         <td data-label="Massage">${r.massageId?.nom || '—'}</td>
+        <td data-label="Thérapeute">${r.therapistId?.nom || '—'}</td>
         <td data-label="Date">${date}</td>
         <td data-label="Statut"><span class="${badgeClass}">${statut}</span></td>
       </tr>

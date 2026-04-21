@@ -1,0 +1,46 @@
+{
+  "faq": [
+    {
+      "id": 1,
+      "question": "À quelle fréquence dois-je me faire masser ?",
+      "answer": "Cela dépend de vos besoins. Pour un bien-être général, une fois par mois est idéal. Si vous avez des douleurs chroniques ou un mode de vie stressant, 2 à 3 fois par mois peut être bénéfique. Notre équipe peut vous conseiller lors de votre première visite.",
+      "category": "frequence"
+    },
+    {
+      "id": 2,
+      "question": "Un massage est-il douloureux ?",
+      "answer": "Non. Un bon massage doit être relaxant, jamais douloureux. Nous adaptons toujours la pression selon votre confort. N'hésitez pas à communiquer avec votre thérapeute si une zone est sensible.",
+      "category": "experience"
+    },
+    {
+      "id": 3,
+      "question": "Combien de temps dure une séance ?",
+      "answer": "Nos séances durent 55 minutes. C'est le temps idéal pour permettre à votre corps de se détendre complètement et de ressentir les bienfaits du massage.",
+      "category": "pratique"
+    },
+    {
+      "id": 4,
+      "question": "Quelle est la différence entre vos types de massage ?",
+      "answer": "Massage Relaxant: Pour un bien-être général et la détente profonde. Massage Thaïlandais: Plus dynamique, stimule votre énergie et la circulation. Pierres Chaudes: Thérapeutique et profond, idéal pour les tensions chroniques. Récupération Sportive: Conçu pour les athlètes et personnes actives.",
+      "category": "types"
+    },
+    {
+      "id": 5,
+      "question": "Je suis enceinte. Puis-je me faire masser ?",
+      "answer": "Oui ! Certains massages sont adaptés à la grossesse et peuvent soulager les tensions. Mentionnez-le lors de votre réservation, et nous vous proposerons l'option idéale pour vous et votre bébé.",
+      "category": "sante"
+    },
+    {
+      "id": 6,
+      "question": "Faut-il se déshabiller complètement ?",
+      "answer": "Non. Vous gardez vos sous-vêtements. Nous utilisons des draps pour couvrir votre corps pendant la séance. Votre intimité et votre confort sont totalement respectés.",
+      "category": "intimite"
+    },
+    {
+      "id": 7,
+      "question": "Puis-je manger avant un massage ?",
+      "answer": "Attendez au moins 1-2 heures après un repas avant votre massage. Buvez de l'eau pour l'hydratation. Après la séance, prenez votre temps pour vous lever — vous pouvez vous sentir détendu !",
+      "category": "preparation"
+    }
+  ]
+}

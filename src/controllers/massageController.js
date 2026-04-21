@@ -2,7 +2,7 @@ const Massage = require('../models/massage');
 
 exports.listerMassages = async (req, res) => {
     try {
-        const massages = await Massage.find();
+        const massages = await Massage.find().populate('therapistId', 'nom specialite');
         res.status(200).json(massages);
     } catch (error) {
         res.status(500).json({ message: error.message });

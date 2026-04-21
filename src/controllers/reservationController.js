@@ -8,22 +8,32 @@ exports.creerReservation = async (req, res) => {
     const reservation = await reservationService.createReservation(
       req.auth.userId,
       req.body.massageId,
+      req.body.therapistId,
       req.body.date
     );
 
-    res.status(201).json({ message: "Réservation confirmée !", reservation });
+    // Populate les infos pour la réponse
+    const fullReservation = await reservation.populate([
+      { path: 'userId', select: 'nom email' },
+      { path: 'massageId', select: 'nom prix duree' },
+      { path: 'therapistId', select: 'nom specialite' }
+    ]);
 
-    // Email en arrière-plan (ne bloque pas la réponse)
+    res.status(201).json({ message: "Réservation confirmée !", reservation: fullReservation });
+
+    // Email en arrière-plan
     try {
-      const [user, massage] = await Promise.all([
+      const [user, massage, therapist] = await Promise.all([
         User.findById(req.auth.userId),
         Massage.findById(req.body.massageId),
+        require('../models/Therapist').findById(req.body.therapistId)
       ]);
-      if (user && massage) {
+      if (user && massage && therapist) {
         await sendReservationConfirmation({
           to: user.email,
           nom: user.nom,
           massage: massage.nom,
+          therapist: therapist.nom,
           date: req.body.date,
         });
       }
