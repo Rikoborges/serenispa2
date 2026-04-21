@@ -38,6 +38,7 @@ function renderMassages(massages) {
             <div class="card__body">
                 <h3 class="card__title">${m.nom}</h3>
                 <p class="card__desc">${m.description}</p>
+                ${m.therapistId ? `<p style="font-size: 0.85rem; color: var(--texte-gris); margin: 0.5rem 0;">👤 ${m.therapistId.nom}</p>` : ''}
                 <div class="card__meta">
                     <span class="card__price">${m.prix} €</span>
                     ${m.duree ? `<span class="card__duration">${m.duree} min</span>` : ''}
@@ -46,8 +47,14 @@ function renderMassages(massages) {
         </article>
     `).join('');
 
+    // Stocker les données des massages globalement
+    window.massagesData = massages;
+
     select.innerHTML = '<option value="">— Choisir un massage —</option>' +
-        massages.map(m => `<option value="${m._id}">${m.nom} (${m.prix} €)</option>`).join('');
+        massages.map(m => {
+            const therapist = m.therapistId ? ` (${m.therapistId.nom})` : '';
+            return `<option value="${m._id}" data-therapist-id="${m.therapistId?._id || ''}">${m.nom}${therapist} (${m.prix} €)</option>`;
+        }).join('');
 }
 
 // --- 1. CARREGAR MASSAGENS (GET) ---
@@ -125,26 +132,128 @@ document.getElementById('show-login').onclick = () => {
     document.getElementById('auth-title').textContent = "Connexion";
 };
 
-// --- 4. RESERVA (POST) ---
+// --- 4. RÉSERVATION: Charger slots disponibles ---
+let selectedSlot = null; // Stocker le slot sélectionné
+let selectedTherapistId = null; // Stocker le therapist sélectionné
+
+document.getElementById('res-massage').addEventListener('change', async (e) => {
+    const massageId = e.target.value;
+    if (!massageId) {
+        document.getElementById('available-slots').innerHTML = '';
+        selectedTherapistId = null;
+        return;
+    }
+
+    // Récupérer le therapistId depuis l'option sélectionnée
+    const option = e.target.options[e.target.selectedIndex];
+    selectedTherapistId = option.getAttribute('data-therapist-id');
+
+    if (!selectedTherapistId) {
+        document.getElementById('available-slots').innerHTML = '<p class="error">Therapist non assigné à ce massage</p>';
+        return;
+    }
+
+    try {
+        const resSlots = await fetch(`${API_URL}/reservations/available-slots/${massageId}/${selectedTherapistId}`);
+
+        if (!resSlots.ok) {
+            const error = await resSlots.json();
+            document.getElementById('available-slots').innerHTML = `<p class="error">Erreur: ${error.message}</p>`;
+            return;
+        }
+
+        const data = await resSlots.json();
+        renderSlots(data.slots);
+    } catch (err) {
+        console.error('Erreur slots:', err);
+        document.getElementById('available-slots').innerHTML = '<p class="error">Erreur chargement horaires</p>';
+    }
+});
+
+function renderSlots(slots) {
+    const container = document.getElementById('available-slots');
+    if (!slots || slots.length === 0) {
+        container.innerHTML = '<p>Aucun créneau disponible</p>';
+        return;
+    }
+
+    // Grouper par date
+    const byDate = {};
+    slots.forEach(slot => {
+        if (!byDate[slot.date]) byDate[slot.date] = [];
+        byDate[slot.date].push(slot);
+    });
+
+    let html = '';
+    for (const [date, daySlots] of Object.entries(byDate)) {
+        html += `<div class="slots-group"><h4>${date}</h4>`;
+        daySlots.forEach(slot => {
+            const disabled = !slot.available ? 'disabled' : '';
+            const classes = !slot.available ? 'slot-btn disabled' : 'slot-btn';
+            html += `
+                <button
+                    type="button"
+                    class="${classes}"
+                    ${disabled}
+                    data-time="${slot.time}"
+                    onclick="selectSlot(event, '${slot.time}')">
+                    ${slot.hour} ${!slot.available ? '(Occupé)' : ''}
+                </button>
+            `;
+        });
+        html += '</div>';
+    }
+    container.innerHTML = html;
+}
+
+function selectSlot(e, time) {
+    e.preventDefault();
+    selectedSlot = time;
+    document.querySelectorAll('.slot-btn').forEach(btn => btn.classList.remove('active'));
+    e.target.classList.add('active');
+}
+
+// --- 5. RÉSERVATION: Créer ---
 document.getElementById('reservation-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const massageId = document.getElementById('res-massage').value;
-    const date = document.getElementById('res-date').value;
+
+    if (!selectedSlot) {
+        showToast('Choisissez un créneau horaire', 'error');
+        return;
+    }
+
+    if (!selectedTherapistId) {
+        showToast('Erreur: Therapist non défini', 'error');
+        return;
+    }
 
     try {
         const res = await fetch(`${API_URL}/reservations`, {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getToken()}` 
+                'Authorization': `Bearer ${getToken()}`
             },
-            body: JSON.stringify({ massageId, date })
+            body: JSON.stringify({
+                massageId,
+                therapistId: selectedTherapistId,
+                date: selectedSlot
+            })
         });
-        if (!res.ok) throw new Error();
-        showToast('Réservation confirmée !', 'success');
-        e.target.reset();
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Erreur réservation');
+
+        showToast('✅ Réservation confirmée !', 'success');
+        setTimeout(() => {
+            e.target.reset();
+            selectedSlot = null;
+            selectedTherapistId = null;
+            document.getElementById('available-slots').innerHTML = '';
+        }, 1500);
     } catch (err) {
-        showToast('Erreur lors de la réservation', 'error');
+        showToast(`❌ ${err.message}`, 'error');
     }
 });
 

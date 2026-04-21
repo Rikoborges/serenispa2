@@ -1,23 +1,20 @@
 const Reservation = require('../models/Reservation');
+const availabilityService = require('./availabilityService');
 
 class ReservationService {
-    async createReservation(userId, massageId, date) {
-        // Validação de "Título/Massage" (Pág. 172)
-        if (!massageId || !date) {
-            throw new Error("Massage ID et date são obrigatórios.");
+    async createReservation(userId, massageId, therapistId, date) {
+        if (!massageId || !therapistId || !date) {
+            throw new Error("Massage ID, therapist ID et date sont obligatoires.");
         }
 
-        // Validação de Data Passada (Pág. 173) - Regra Ética do Spa
-        const selectedDate = new Date(date);
-        const today = new Date();
-        if (selectedDate < today) {
-            throw new Error("La date de réservation ne peut pas être dans le passé.");
-        }
+        // Valider que le créneau est disponible
+        await availabilityService.validateSlot(therapistId, date, 55);
 
-        // Criação da reserva
+        // Créer la réservation
         const reservation = new Reservation({
             userId,
             massageId,
+            therapistId,
             date
         });
 
@@ -30,8 +27,8 @@ class ReservationService {
         if (!reservation) throw new Error("Réservation introuvable.");
         if (reservation.userId.toString() !== userId) throw new Error("Action non autorisée.");
 
-        const selectedDate = new Date(date);
-        if (selectedDate < new Date()) throw new Error("La date ne peut pas être dans le passé.");
+        // Valider le nouveau créneau
+        await availabilityService.validateSlot(reservation.therapistId, date, 55);
 
         reservation.date = date;
         return await reservation.save();

@@ -1111,3 +1111,59 @@ ul {
 iframe[src*="vercel.com/toolbar"] {
   display: none !important;
 }
+
+/* === Slots de disponibilité === */
+.available-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.slots-group {
+  padding: 1rem;
+  background: var(--beige-clair);
+  border-radius: 8px;
+  border: 1px solid var(--beige-bord);
+}
+
+.slots-group h4 {
+  margin: 0 0 0.8rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--titres);
+  text-transform: capitalize;
+}
+
+.slot-btn {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  margin: 0.3rem 0.3rem 0.3rem 0;
+  background: var(--blanc);
+  border: 2px solid var(--beige-bord);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--titres);
+  transition: all 0.2s;
+}
+
+.slot-btn:hover:not(.disabled) {
+  border-color: var(--sage);
+  background: var(--beige-clair);
+  transform: translateY(-2px);
+}
+
+.slot-btn.active {
+  background: var(--sage);
+  color: white;
+  border-color: var(--sage);
+}
+
+.slot-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f0f0f0;
+  color: #999;
+}
