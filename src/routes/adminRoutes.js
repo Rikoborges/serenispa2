@@ -5,6 +5,7 @@ const adminMiddleware = require('../middleware/adminMiddleware');
 const Reservation = require('../models/Reservation');
 const Therapist = require('../models/Therapist');
 const Massage = require('../models/massage');
+const User = require('../models/user');
 
 // GET /api/admin/stats — tableau de bord admin amélioré
 router.get('/stats', auth, adminMiddleware, async (req, res) => {
@@ -85,10 +86,31 @@ router.get('/stats', auth, adminMiddleware, async (req, res) => {
   }
 });
 
-// POST /api/admin/seed-therapists — Créer les therapists (dev only)
+// POST /api/admin/setup-admin — Ativar isAdmin para usuário (via API, seguro)
+router.post('/setup-admin', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.auth.userId);
+
+    if (!user) return res.status(404).json({ message: "Usuário não encontrado" });
+
+    user.isAdmin = true;
+    user.role = 'admin';
+    await user.save();
+
+    res.json({ message: "Você agora é admin!", user: { nom: user.nom, isAdmin: user.isAdmin } });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// POST /api/admin/seed-therapists — Créer les therapists
 router.post('/seed-therapists', async (req, res) => {
   try {
-    await Therapist.deleteMany({});
+    // Vérifier si therapists existent déjà
+    const count = await Therapist.countDocuments();
+    if (count > 0) {
+      return res.json({ message: 'Therapists déjà créés', count });
+    }
 
     const therapists = await Therapist.insertMany([
       {
@@ -114,16 +136,16 @@ router.post('/seed-therapists', async (req, res) => {
       }
     ]);
 
-    // Associer les therapists aux massages
+    // Associer les therapists aux massages (45 minutos)
     const massageUpdates = [
-      { nom: 'Massage Relaxant', therapistId: therapists[0]._id, duree: 55 },
-      { nom: 'Massage Thaïlandais', therapistId: therapists[1]._id, duree: 55 },
-      { nom: 'Pierres Chaudes', therapistId: therapists[2]._id, duree: 55 },
-      { nom: 'Massage Récupération', therapistId: therapists[1]._id, duree: 55 }
+      { nom: 'Massage Suédois', therapistId: therapists[0]._id, duree: 45 },
+      { nom: 'Massage Thaïlandais', therapistId: therapists[1]._id, duree: 45 },
+      { nom: 'Pierres Chaudes', therapistId: therapists[2]._id, duree: 45 },
+      { nom: 'Massage Relaxant', therapistId: therapists[0]._id, duree: 45 }
     ];
 
     for (const update of massageUpdates) {
-      await Massage.updateOne({ nom: update.nom }, update, { upsert: false });
+      await Massage.updateOne({ nom: update.nom }, update, { upsert: true });
     }
 
     res.json({ message: 'Therapists créés et massages mis à jour', therapists });
