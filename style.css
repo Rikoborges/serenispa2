@@ -1167,3 +1167,37 @@ iframe[src*="vercel.com/toolbar"] {
   background: #f0f0f0;
   color: #999;
 }
+
+/* === Détails/Summary (FAQ) === */
+details {
+  transition: all 0.3s ease;
+}
+
+details[open] {
+  background: var(--blanc) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+summary {
+  user-select: none;
+  transition: color 0.2s;
+}
+
+summary:hover {
+  color: var(--sage) !important;
+}
+
+details p {
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
