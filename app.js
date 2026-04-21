@@ -177,7 +177,6 @@ function renderSlots(slots) {
         return;
     }
 
-    // Grouper par date
     const byDate = {};
     slots.forEach(slot => {
         if (!byDate[slot.date]) byDate[slot.date] = [];
@@ -195,8 +194,7 @@ function renderSlots(slots) {
                     type="button"
                     class="${classes}"
                     ${disabled}
-                    data-time="${slot.time}"
-                    onclick="selectSlot(event, '${slot.time}')">
+                    data-time="${slot.time}">
                     ${slot.hour} ${!slot.available ? '(Occupé)' : ''}
                 </button>
             `;
@@ -204,13 +202,14 @@ function renderSlots(slots) {
         html += '</div>';
     }
     container.innerHTML = html;
-}
 
-function selectSlot(e, time) {
-    e.preventDefault();
-    selectedSlot = time;
-    document.querySelectorAll('.slot-btn').forEach(btn => btn.classList.remove('active'));
-    e.target.classList.add('active');
+    container.addEventListener('click', (e) => {
+        if (e.target.classList.contains('slot-btn') && !e.target.disabled) {
+            selectedSlot = e.target.getAttribute('data-time');
+            document.querySelectorAll('.slot-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+        }
+    });
 }
 
 // --- 5. RÉSERVATION: Créer ---
@@ -391,6 +390,3 @@ document.getElementById('close-cookies-modal').addEventListener('click', () => c
         if (e.target === modal) modal.close();
     });
 });
-
-
-
